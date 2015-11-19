@@ -122,24 +122,18 @@ public abstract class Document {
 					+ ", expected " + syllables);
 			passed = false;
 		}
-		else
-			System.out.println("SY->"+syllFound);
+
 		if (wordsFound != words) {
 			System.out.println("\nIncorrect number of words.  Found " + wordsFound 
 					+ ", expected " + words);
 			passed = false;
 		}
-		else
-			System.out.println("WD->"+wordsFound);
 
 		if (sentFound != sentences) {
 			System.out.println("\nIncorrect number of sentences.  Found " + sentFound 
 					+ ", expected " + sentences);
 			passed = false;
 		}
-		else
-			System.out.println("SE->"+sentFound);
-		
 		
 		if (passed) {
 			System.out.println("passed.\n");

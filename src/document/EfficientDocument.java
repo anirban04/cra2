@@ -42,11 +42,26 @@ public class EfficientDocument extends Document {
 		// Provide this first line in the starter code.  
 		// Words are only strings of letters.  No numbers.
 		List<String> tokens = getTokens("[!?.]+|[a-zA-Z]+");
+		//for(String  s : tokens) {
+		//	System.out.println(s);
+		//}
 		
 		// TODO: Finish this method.  Remember the countSyllables method from 
 		// Document.  That will come in handy here.
-	}
-	
+		int cnt = 0;
+		for(String  s : tokens) {
+			if(isWord(s)) {
+				numWords++;
+				numSyllables+=countSyllables(s);
+				if(cnt == tokens.size() - 1) {
+					numSentences++;
+				}
+			}
+			else
+				numSentences++;
+			cnt++;
+		}
+	} 
 	
 	/**
 	 * Get the number of words in the document.
@@ -58,7 +73,7 @@ public class EfficientDocument extends Document {
 	@Override
 	public int getNumWords() {
 		//TODO: write this method.  Hint: It's simple
-	    return 0;
+	    return numWords;
 	}
 
 	/**
@@ -72,7 +87,7 @@ public class EfficientDocument extends Document {
 	@Override
 	public int getNumSentences() {
         //TODO: write this method.  Hint: It's simple
-        return 0;
+        return numSentences;
 	}
 
 	/**
@@ -86,7 +101,7 @@ public class EfficientDocument extends Document {
 	@Override
 	public int getNumSyllables() {
         //TODO: write this method.  Hint: It's simple
-        return 0;
+        return numSyllables;
 	}
 	
 	// Can be used for testing
@@ -109,7 +124,6 @@ public class EfficientDocument extends Document {
 		testCase(new EfficientDocument("Sentences?!"), 3, 1, 1);
 		testCase(new EfficientDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
 		         32, 15, 1);
-		
 	}
 	
 
