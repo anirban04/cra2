@@ -42,9 +42,6 @@ public class EfficientDocument extends Document {
 		// Provide this first line in the starter code.  
 		// Words are only strings of letters.  No numbers.
 		List<String> tokens = getTokens("[!?.]+|[a-zA-Z]+");
-		//for(String  s : tokens) {
-		//	System.out.println(s);
-		//}
 		
 		// TODO: Finish this method.  Remember the countSyllables method from 
 		// Document.  That will come in handy here.

@@ -81,12 +81,10 @@ public abstract class Document {
 		boolean wasPrevVov = false;
 		for(int i=0; i<word.length(); i++) {
 			char c = word.charAt(i);
-			//if ((c == 'a') || (c == 'e') || (c == 'i') || (c == 'o') || (c == 'u') || (c == 'y')||
-			//	(c == 'A') || (c == 'E') || (c == 'I') || (c == 'O') || (c == 'U') || (c == 'Y')) {
+
 			if("aeiuoyAEIOUY".indexOf(c) >= 0) {
 				if (!wasPrevVov) {
 					if ((i == word.length() - 1) && ((c == 'e') || (c == 'E')) && (count != 0)) {
-						//System.out.println("c->" + count);
 						return count;
 					}
 					else {
@@ -164,7 +162,7 @@ public abstract class Document {
 	public double getFleschScore()
 	{
 	    Double fleschScore;
-	    fleschScore = 206.835 - (1.015 * ( (double)getNumWords()/(double)getNumSentences())) - (84.600 * ((double)getNumSyllables()/(double)getNumWords()));
+	    fleschScore = 206.835 - (1.015 * ((double)getNumWords()/(double)getNumSentences())) - (84.600 * ((double)getNumSyllables()/(double)getNumWords()));
 	    return fleschScore;
 	}
 	

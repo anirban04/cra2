@@ -24,7 +24,7 @@ public class DocumentBenchmarking {
 		
 	    // The amount of characters to increment each step
 	    // You can play around with this
-		int increment = 200000;
+		int increment = 20000;
 
 		// The number of steps to run.  
 		// You can play around with this.
