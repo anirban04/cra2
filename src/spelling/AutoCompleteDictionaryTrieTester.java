@@ -83,7 +83,7 @@ public class AutoCompleteDictionaryTrieTester {
 		
 		
 	}
-	
+
 	/** Test the addWord method */
 	@Test
 	public void addWord()
@@ -128,7 +128,7 @@ public class AutoCompleteDictionaryTrieTester {
 		
 		
 	}
-	
+
 	@Test
 	public void testPredictCompletions()
 	{
@@ -158,9 +158,5 @@ public class AutoCompleteDictionaryTrieTester {
 	
 		completions = smallDict.predictCompletions("x", 5);
 		assertEquals(0, completions.size());
-	}
-	
-	
-	
-	
+	}	
 }

@@ -1,6 +1,7 @@
 package spelling;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,8 +29,31 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 * That is, you should convert the string to all lower case as you insert it. */
 	public boolean addWord(String word)
 	{
-	    //TODO: Implement this method.
-	    return false;
+		TrieNode node = root;
+		boolean present = true;
+
+		if (word == null)
+			return false;
+
+	    String lWord = word.toLowerCase();
+	    char[] cArr = lWord.toCharArray();
+	    
+	    for(char c : cArr) {
+	    	TrieNode temp = node.getChild(c);
+	    	if(temp == null) {
+	    		present = false;
+	    		temp = node.insert(c);	
+	    	}
+	    	node = temp;
+	    }
+	    
+	    if((present) && (node.endsWord()))
+	    	return false;
+	    else {
+	    	node.setEndsWord(true);
+	    	size++;
+	    	return true;
+	    }
 	}
 	
 	/** 
@@ -38,17 +62,41 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 */
 	public int size()
 	{
-	    //TODO: Implement this method
-	    return 0;
+	    return this.size;
 	}
 	
+	/* Returns null if stem not found */
+	private TrieNode getStemNode(String s) {
+		TrieNode node = root;
+
+		if (s == null)
+			return null;
+
+	    String lWord = s.toLowerCase();
+	    char[] cArr = lWord.toCharArray();
+	    
+	    for(char c : cArr) {
+	    	node = node.getChild(c);
+	    	if(node == null) {
+	    		return null;
+	    	}
+	    }
+	    return node;
+	}
 	
 	/** Returns whether the string is a word in the trie */
 	@Override
 	public boolean isWord(String s) 
 	{
-	    // TODO: Implement this method
-		return false;
+		TrieNode node = getStemNode(s);
+		
+	    if(node == null)
+	    	return false;
+	    
+	    if(node.endsWord())
+	    	return true;
+	    else 
+	    	return false;
 	}
 
 	/** 
@@ -75,8 +123,29 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 //       If it is a word, add it to the completions list
     	 //       Add all of its child nodes to the back of the queue
     	 // Return the list of completions
+ 
+    	 List<String> lst = new LinkedList<String>();
+    	 TrieNode node = getStemNode(prefix);
     	 
-         return null;
+    	 if(node == null)
+    		 return lst;
+
+ 
+    	 Queue<TrieNode> q = new LinkedList<TrieNode>();
+    	 q.add(node);
+    	 
+    	 while ((!q.isEmpty()) && (numCompletions > 0)) {
+    		 node = q.remove();
+    		 if(node.endsWord()) {
+    			 lst.add(node.getText());
+    			 numCompletions--;
+    		 }
+    		 Set<Character> cList = node.getValidNextCharacters();
+    		 for (Character c : cList) {
+    			 q.add(node.getChild(c));
+    		 }
+    	 }
+    	 return lst;
      }
 
  	// For debugging
