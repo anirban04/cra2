@@ -167,8 +167,5 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
  			next = curr.getChild(c);
  			printNode(next);
  		}
- 	}
- 	
-
-	
+ 	}	
 }
