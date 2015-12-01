@@ -7,6 +7,7 @@ package spelling;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * WPTree implements WordPath by dynamically creating a tree of words during a Breadth First
@@ -26,10 +27,9 @@ public class WPTree implements WordPath {
 	// You'll need to create your own NearbyWords object here.
 	public WPTree () {
 		this.root = null;
-		// TODO initialize a NearbyWords object
-		// Dictionary d = new DictionaryHashSet();
-		// DictionaryLoader.loadDictionary(d, "data/dict.txt");
-		// this.nw = new NearbyWords(d);
+		Dictionary d = new DictionaryHashSet();
+		DictionaryLoader.loadDictionary(d, "data/dict.txt");
+		this.nw = new NearbyWords(d);
 	}
 	
 	//This constructor will be used by the grader code
@@ -41,8 +41,28 @@ public class WPTree implements WordPath {
 	// see method description in WordPath interface
 	public List<String> findPath(String word1, String word2) 
 	{
-	    // TODO: Implement this method.
-	    return new LinkedList<String>();
+		List<String> nwl;
+		HashSet<String> visited = new HashSet<String>();
+		root = new WPTreeNode(word1.toLowerCase(), null);
+		Queue<WPTreeNode> q = new LinkedList<WPTreeNode>();
+		q.add(root);
+		visited.add(root.getWord());
+		WPTreeNode node;
+		
+		while (!q.isEmpty()) {
+			node = q.remove();
+			if(node.getWord().equals(word2.toLowerCase())) {
+				return (node.buildPathToRoot());
+			}
+			nwl = nw.distanceOne(node.getWord(), true);
+			for (String s : nwl) {
+				if(!visited.contains(s)) {
+					visited.add(s);
+					q.add(node.addChild(s));
+				}
+			}
+		}
+	    return null;
 	}
 	
 	// Method to print a list of WPTreeNodes (useful for debugging)
@@ -56,6 +76,12 @@ public class WPTree implements WordPath {
 		return ret;
 	}
 	
+    
+    public static void main(String[] args) {
+    	WPTree tree = new WPTree();
+    	List<String> path = tree.findPath("the", "aaaa");
+    	System.out.println(path);
+    }
 }
 
 /* Tree Node in a WordPath Tree. This is a standard tree with each
@@ -109,6 +135,7 @@ class WPTreeNode {
         WPTreeNode curr = this;
         List<String> path = new LinkedList<String>();
         while(curr != null) {
+        	//System.out.println(curr);
             path.add(0,curr.getWord());
             curr = curr.parent; 
         }
@@ -142,6 +169,5 @@ class WPTreeNode {
         ret+=(" ]\n");
         return ret;
     }
-
 }
 
